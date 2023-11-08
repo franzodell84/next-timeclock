@@ -8,34 +8,26 @@ import { timestampToDate } from "@/lib/utils";
 
 interface UserLogProps {
   userlog: UserLogs;
+  userName: String;
 }
 
-const UserLogItem = ({
-  id,
-  fullname,
-  inout,
-  notes,
-  timestamp,
-  createdAt,
-  updatedAt,
-  userId,
-}: UserLogs) => {
+const UserLogItem = ({ userlog, userName }: UserLogProps) => {
   return (
     <div className="flex justify-between items-center p-2 w-full">
       <div className="flex flex-row justify-right items-right gap-3">
-        {fullname}
+        {userName}
       </div>
       <div className="flex flex-row justify-center items-center gap-3">
-        <UserLogItemType inout={inout} />
+        <UserLogItemType inout={userlog.inout} />
       </div>
       <div className="flex flex-row justify-right items-right gap-3">
-        {timestampToTime(timestamp)}
+        {timestampToTime(userlog.timestamp)}
       </div>
       <div className="flex flex-row justify-right items-right gap-3">
-        {timestampToDate(timestamp)}
+        {timestampToDate(userlog.timestamp)}
       </div>
       <div className="flex flex-row justify-right items-right gap-3">
-        {notes}
+        {userlog.notes}
       </div>
       {/* Actions Button */}
       <div className="flex items-center justify-center gap-2">
