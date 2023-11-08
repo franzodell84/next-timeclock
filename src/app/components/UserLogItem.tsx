@@ -14,7 +14,7 @@ interface UserLogProps {
 const UserLogItem = ({ userlog, userName }: UserLogProps) => {
   return (
     <div className="flex justify-between items-center p-2 w-full">
-      <div className="flex flex-row w-2/12 justify-right items-right">
+      <div className="flex flex-row w-3/12 justify-right items-right">
         {userName}
       </div>
       <div className="flex flex-row w-1/12 justify-center items-center">
@@ -26,7 +26,7 @@ const UserLogItem = ({ userlog, userName }: UserLogProps) => {
       <div className="flex flex-row w-1/12 justify-right items-right">
         {timestampToDate(userlog.timestamp)}
       </div>
-      <div className="flex flex-row w-5/12 justify-right items-right">
+      <div className="flex flex-row w-4/12 justify-right items-right">
         {userlog.notes}
       </div>
       {/* Actions Button */}
