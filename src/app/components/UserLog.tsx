@@ -10,10 +10,6 @@ import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 
-interface IfirstChildProps {
-  onChangeSomeStates: Function;
-}
-
 type UsersProps = {
   users: User[];
 };
