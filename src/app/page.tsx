@@ -52,19 +52,19 @@ export default async function Home() {
           <h3>Logs for this week</h3>
           <div className="overflow-x-auto">
             <div className="flex justify-between items-center p-2 w-full align-top">
-              <div className="flex flex-row justify-center items-center gap-3">
+              <div className="flex flex-row w-2/12 justify-center items-center gap-3">
                 Name
               </div>
-              <div className="flex flex-row justify-center items-center gap-3">
+              <div className="flex flex-row w-1/12 justify-center items-center gap-3">
                 In/Out
               </div>
-              <div className="flex flex-row justify-center items-center gap-3">
+              <div className="flex flex-row w-1/12 justify-center items-center gap-3">
                 Time
               </div>
-              <div className="flex flex-row justify-center items-center gap-3">
+              <div className="flex flex-row w-1/12 justify-center items-center gap-3">
                 Date
               </div>
-              <div className="flex flex-row justify-center items-center gap-3">
+              <div className="flex flex-row w-5/12 justify-center items-center gap-3">
                 Notes
               </div>
               <div className="flex items-center justify-center gap-2">
