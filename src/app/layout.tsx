@@ -1,4 +1,5 @@
 import { PageHeader } from "./components/PageHeader";
+import { PageMenu } from "./components/PageMenu";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="container p-2 mx-auto">
           <PageHeader />
+          <PageMenu />
           {children}
         </div>
       </body>

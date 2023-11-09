@@ -1,4 +1,5 @@
 import Moment from 'react-moment';
+import * as crypto from 'crypto';
 
 export const numberToIDRFormat = (num: number): string => {
     return `Rp${num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
@@ -45,3 +46,5 @@ export const timestampToTime = (ts: number): string => {
     return `${hours}:${formattedminutes} ${newformat}`
 
 }
+
+export const md5 = (contents: string) => crypto.createHash('md5').update(contents).digest("hex");

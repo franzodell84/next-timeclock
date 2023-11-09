@@ -35,11 +35,6 @@ export default async function Home() {
 
   return (
     <main>
-      <div className="flex w-full py-3">
-        <Link className="link" href="/users">
-          Manage Users
-        </Link>
-      </div>
       <div className="flex w-full">
         <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-3/12 p-5">
           <h3>Please sign in below</h3>
