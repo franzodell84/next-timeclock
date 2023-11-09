@@ -8,9 +8,6 @@ export async function POST(request){
     var date = new Date();     
     let logTimestamp = Math.floor(date.getTime() / 1000);
 
-    console.log(logTimestamp);
-    console.log(date);
-
      const result = await prisma.userLogs.create({
         data: {
             inout: logInOut,

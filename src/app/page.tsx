@@ -1,10 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { UserLogs } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import UserLog from "./components/UserLog";
 import UserLogItem from "./components/UserLogItem";
-import { FaGripHorizontal } from "react-icons/fa";
 
 const UserLogsList = ({ userlogs }: { userlogs: UserLogs[] }) => {
   return (

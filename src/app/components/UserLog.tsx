@@ -3,10 +3,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
+import SubmitButton from "./SubmitButton";
+//import { isLoading } from "@/store/flags";
 
 type UsersProps = {
   users: User[];
 };
+
+//const formLoading = isLoading();
 
 const UserLog = ({ users }: UsersProps) => {
   const [logUser, setUser] = useState("");
@@ -14,6 +18,7 @@ const UserLog = ({ users }: UsersProps) => {
   const [logPassword, setPassword] = useState("");
   const [logInOut, setInOut] = useState("");
   const [logNotes, setNotes] = useState("");
+  const [isLoading, setLoading] = useState("");
 
   const router = useRouter();
 
@@ -25,6 +30,10 @@ const UserLog = ({ users }: UsersProps) => {
       console.log(logPassword);
       console.log(logInOut);
       console.log(logNotes);
+
+      //formLoading.setLoadTrue();
+
+      //console.log(formLoading);
 
       await fetch("/api/add-log", {
         method: "POST",
@@ -45,6 +54,8 @@ const UserLog = ({ users }: UsersProps) => {
       setPassword("");
       setInOut("");
       setNotes("");
+
+      //formLoading.setLoadFalse();
     } catch (error) {
       console.error(error);
     }
@@ -106,9 +117,9 @@ const UserLog = ({ users }: UsersProps) => {
           />
         </div>
         <div className="form-control w-full max-w-xs">&nbsp;</div>
-        <button type="submit" className="btn btn-primary w-full">
-          Submit
-        </button>
+        <div className="flex flex-row gap-3 justify-center items-center mt-5">
+          <SubmitButton text={"Submit"} pendingText={"Saving..."} />
+        </div>
       </form>
     </main>
   );
