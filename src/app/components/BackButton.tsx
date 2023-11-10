@@ -1,13 +1,14 @@
 "use client";
 
 import { FaSpinner } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 //import { isLoading } from "@/store/flags";
 
 const initialState = {
   message: null,
 };
 
-const SubmitButton = ({
+const BackButton = ({
   text,
   pendingText,
 }: {
@@ -16,15 +17,17 @@ const SubmitButton = ({
 }) => {
   //  const formLoading = isLoading();
   //  const pending = !formLoading;
+  const router = useRouter();
   const pending = false;
 
   console.log(pending);
 
   return (
     <button
-      className="btn btn-primary  w-40"
+      className="btn btn-secondary  w-40"
       aria-disabled={pending}
       disabled={pending}
+      onClick={() => router.back()}
     >
       {!pending ? (
         ""
@@ -38,4 +41,4 @@ const SubmitButton = ({
   );
 };
 
-export default SubmitButton;
+export default BackButton;

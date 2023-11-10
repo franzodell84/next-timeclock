@@ -1,8 +1,19 @@
 import Link from "next/link";
-import { UserLogs } from "@prisma/client";
 import prisma from "@/lib/prisma";
+import { UserLogs, User } from "@prisma/client";
 import UserLog from "./components/UserLog";
 import UserLogItem from "./components/UserLogItem";
+
+type UserLogsWithName = {
+  id: String;
+  inout: String;
+  notes: String;
+  timestamp: Number;
+  createdAt: Date;
+  updatedAt: Date;
+  logger: User;
+  userId: String;
+};
 
 const UserLogsList = ({ userlogs }: { userlogs: UserLogs[] }) => {
   return (

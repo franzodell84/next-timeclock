@@ -17,8 +17,8 @@ model UserLogs {
   timestamp Int
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")  
-  logger    User?   @relation(fields: [userId], references: [id])
-  userId  String?
+  logger    User   @relation(fields: [userId], references: [id])
+  userId  String
 }
 
 model User {
