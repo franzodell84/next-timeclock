@@ -22,7 +22,7 @@ const SubmitButton = ({
 
   return (
     <button
-      className="btn btn-primary w-40"
+      className="btn btn-primary  w-40"
       aria-disabled={pending}
       disabled={pending}
     >
