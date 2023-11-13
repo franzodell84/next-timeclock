@@ -14,6 +14,12 @@ export const PageMenu = () => {
           Users
         </Link>
       </div>
+      <div className="divider divider-horizontal"></div>
+      <div>
+        <Link className="link" href="/login">
+          Admin Login
+        </Link>
+      </div>
     </div>
   );
 };

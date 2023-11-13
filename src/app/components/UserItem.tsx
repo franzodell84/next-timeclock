@@ -4,23 +4,25 @@ import Link from "next/link";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { User } from "@prisma/client";
 import { useState, useEffect } from "react";
-
+import { useRouter } from "next/navigation";
 const UserItem = ({ userRow }: { userRow: User }) => {
-  const [deleteId, deleteRow] = useState(0);
+  const [deleteId, deleteRow] = useState("");
+
+  const router = useRouter();
 
   const deleteUserRecord = async () => {
     try {
-      var url = process.env.REACT_APP_API_URL;
-      const response = await fetch(
-        url + "api/transitlog/deleterecord?id=" + deleteId
-      );
+      const response = await fetch(`/api/delete-user/${deleteId}`, {
+        method: "DELETE",
+      });
+      router.refresh();
     } catch (error) {
       console.error("Error deleting data :", error);
     }
   };
 
   useEffect(() => {
-    if (deleteId > 0) {
+    if (deleteId != "") {
       if (window.confirm("Are you sure you want to delete this user?"))
         deleteUserRecord();
     }
@@ -46,7 +48,7 @@ const UserItem = ({ userRow }: { userRow: User }) => {
           <FaPencilAlt />
         </Link>
 
-        <Link href={`users/delete/${userRow.id}`}>
+        <Link href="#" onClick={() => deleteRow(`${userRow.id}`)}>
           <FaTrashAlt />
         </Link>
       </div>
