@@ -15,7 +15,9 @@ type UserLogsWithName = {
   userId: String;
 };
 
-const UserLogsList = ({ userlogs }: { userlogs: UserLogs[] }) => {
+// UserLogs[], replaced w/ any since we're getting error on .logger var
+
+const UserLogsList = ({ userlogs }: { userlogs: any[] }) => {
   return (
     <div
       className="flex flex-col justify-start items-start divide-y 
@@ -26,7 +28,7 @@ const UserLogsList = ({ userlogs }: { userlogs: UserLogs[] }) => {
         <UserLogItem
           key={userlog.id}
           userlog={userlog}
-          userName={userlog.logger.name}
+          userName={userlog.logger?.name}
         />
       ))}
     </div>
