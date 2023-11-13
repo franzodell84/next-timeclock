@@ -14,11 +14,12 @@ type UsersProps = {
 //const formLoading = isLoading();
 
 const UserForm = ({ data }: UsersProps) => {
-  const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState(data ? data?.id : "");
+  const [userName, setUserName] = useState(data ? data?.name : "");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [admin, setAdmin] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [email, setEmail] = useState(data ? data?.email : "");
+  const [admin, setAdmin] = useState(data ? data?.admin : false);
+  const [disabled, setDisabled] = useState(data ? data?.disabled : false);
 
   const router = useRouter();
 
@@ -26,31 +27,52 @@ const UserForm = ({ data }: UsersProps) => {
     event.preventDefault();
 
     try {
+      console.log("Saving");
+      console.log(userId);
       //formLoading.setLoadTrue();
+      if (userId == null || userId == "" || userId == "undefined") {
+        setUserId("");
+      }
 
       //console.log(formLoading);
-
-      await fetch("/api/add-user", {
+      console.log(
+        JSON.stringify({
+          userId,
+          userName,
+          password,
+          email,
+          admin,
+          disabled,
+        })
+      );
+      const response = await fetch("/api/update-user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId,
           userName,
           password,
           email,
           admin,
           disabled,
         }),
-      });
+      })
+        .then((response) => {
+          //console.log(response);
 
-      router.refresh();
+          setUserId("");
+          setUserName("");
+          setPassword("");
+          setEmail("");
+          setAdmin(false);
+          setDisabled(false);
 
-      setUserName("");
-      setPassword("");
-      setEmail("");
-      setAdmin(false);
-      setDisabled(false);
+          router.refresh();
+          router.push("/users");
+        })
+        .catch((err) => console.error("Error: " + err));
 
       //formLoading.setLoadFalse();
     } catch (error) {
@@ -58,10 +80,15 @@ const UserForm = ({ data }: UsersProps) => {
     }
   };
 
+  if (data) {
+    //setUserId(data.id);
+  }
+
   return (
     <main>
       <form onSubmit={handleSubmit}>
         {data && <input type="hidden" name="id" defaultValue={data?.id} />}
+
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="form-control w-full max-w-xs">
           <label htmlFor="user">Name:</label>
@@ -83,7 +110,13 @@ const UserForm = ({ data }: UsersProps) => {
             id="password"
             autoComplete="true"
             onChange={(event) => setPassword(event.target.value)}
-            defaultValue=""
+            defaultValue={
+              data != null
+                ? data?.userPassword !== null
+                  ? "password_on_file"
+                  : ""
+                : ""
+            }
             required
           />
         </div>
@@ -109,7 +142,8 @@ const UserForm = ({ data }: UsersProps) => {
               type="checkbox"
               value=""
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              checked={
+              onChange={(event) => setAdmin(event.target.checked)}
+              defaultChecked={
                 data != null
                   ? data?.admin !== null
                     ? data?.admin
@@ -127,7 +161,8 @@ const UserForm = ({ data }: UsersProps) => {
               type="checkbox"
               value=""
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              checked={
+              onChange={(event) => setDisabled(event.target.checked)}
+              defaultChecked={
                 data != null
                   ? data?.disabled !== null
                     ? data?.disabled

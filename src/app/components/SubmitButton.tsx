@@ -18,7 +18,7 @@ const SubmitButton = ({
   //  const pending = !formLoading;
   const pending = false;
 
-  console.log(pending);
+  //console.log(pending);
 
   return (
     <button
