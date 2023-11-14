@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { User } from "@prisma/client";
 import SubmitButton from "./SubmitButton";
 import BackButton from "./BackButton";
 //import { isLoading } from "@/store/flags";
