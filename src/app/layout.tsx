@@ -1,6 +1,5 @@
 import { PageHeader } from "./components/PageHeader";
 import { PageMenu } from "./components/PageMenu";
-import { LoginStatus } from "./components/LoginStatus";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import AuthProvider from "./components/AuthProvider";
@@ -23,7 +22,6 @@ export default function RootLayout({
         <div className="container p-2 mx-auto">
           <AuthProvider>
             <PageHeader />
-            <LoginStatus />
             <PageMenu />
             {children}
           </AuthProvider>

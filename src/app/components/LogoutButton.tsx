@@ -1,16 +1,11 @@
 "use client";
 
 import { signOut } from "next-auth/react";
-import { FaSignOutAlt } from "react-icons/fa";
 
 const LogoutButton = () => {
   return (
-    <button
-      className="text-red-500 border px-2 py-1 border-red-300
-                  hover:bg-red-100/70 flex justify-center items-center gap-1"
-      onClick={() => signOut()}
-    >
-      <FaSignOutAlt /> <span className="text-sm font-medium">Logout</span>
+    <button className="" onClick={() => signOut()}>
+      <span>Logout</span>
     </button>
   );
 };

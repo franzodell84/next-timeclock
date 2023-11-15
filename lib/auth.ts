@@ -3,9 +3,19 @@ import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { NextAuthOptions } from 'next-auth'
 import prisma from './prisma'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { md5 } from "@/lib/utils";
 
-/*
-export const authOptions = {
+export const authOptions : NextAuthOptions = {
+    adapter: PrismaAdapter(prisma),
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+        strategy: 'jwt'
+    },
+    pages: {
+        signIn: '/login',
+        error: '/error'
+    },    
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -16,45 +26,75 @@ export const authOptions = {
             clientSecret: process.env.GITHUB_SECRET as string
         }),
         CredentialsProvider({
-            name: 'Demo',
+            name: 'Credentials',
             credentials: {
+                /* username: { label: "Username", type: "text", placeholder: "jsmith"}, */
+                password: { label: "Password", type: "password"},
                 email: {
                     label: 'Email',
                     type: 'text',
-                    placeholder: 'demo',
-                    value: 'user@demo.com'
+                    placeholder: 'dummy@mail.com'
                 },
             },
             async authorize(credentials, _req) {
                 try {
-                    const user = await prisma.user.findFirst({ where: { email: credentials?.email} })
+                    if(!credentials?.email || !credentials?.password){
+                        return null;
+                    }
 
-                    if (user) {
-                        const authUser = {
-                            id: String(user.id),
-                            name: user.name,
+                    const user = await prisma.user.findUnique({ where: { email: credentials?.email} })
+
+                    if(!user){
+                        return null;
+                    }
+
+                    if(md5(credentials.password) === user.userPassword){
+                        // password match
+                        const authUser = {                            
+                            id: user.id,
+                            username: user.name,
                             email: user.email
                         }
 
-                        return authUser
+                        return authUser;
                     }
 
                     return null
-                } catch (error) {
-                    console.log(error)
 
+                } catch (error) {
                     return null
                 }
             }
         })
     ],
-    pages: {
-        signIn: '/login',
-        error: '/error'
-    },
+
     callbacks: {
-        async session({ session }) {
+        async jwt({token, user}){
+            /**/
+            if(user){
+                return {
+                    ...token,
+                    id: user.id,
+                    username: user.name,
+                    email: user.email
+                }
+            }
+            
+            return token
+        },
+        async session({ session, user, token }) {
             try {
+
+                return{
+                    ...session,
+                    user: {
+                        ...session.user,
+                        id: token.id,
+                        username: token.username,
+                        email: token.email
+                    }
+                }
+                /*
                 if (!session.user?.email) {
                     throw new Error('User email undefined')
                 }
@@ -68,39 +108,20 @@ export const authOptions = {
                 if (!currentUser) {
                     throw new Error('Current user undefined')
                 }
-                
-                session.user.id = currentUser.id
+
+                //session.user.id = currentUser.id;
+                session.user.name = currentUser.name;
+                session.user.email = currentUser.email;
 
                 return session
+                */
             } catch (error) {
                 console.log(error)
                 return session
             }
         },
-        async signIn({ user }) {
-            try {
-                if (!user?.email || !user?.name) {
-                    throw new Error(`Sign in error: ${user} not return anything`)
-                }
-
-                const userData = await prisma.user.findFirst({ where: { email: user.email as string } })
-                if (!userData) {
-                    await prisma.user.create({
-                        data: {
-                            email: user.email as string,
-                            name: user.name as string,
-                            image: user.image as string
-                        }
-                    })
-                }
-
-                return true
-            } catch (error) {
-                console.log(error)
-                return false
-            }
-        },
+        
     },
+    
 } satisfies NextAuthOptions
 
-*/
