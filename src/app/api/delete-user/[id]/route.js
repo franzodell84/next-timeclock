@@ -8,5 +8,6 @@ export async function DELETE(request, {params}){
         where: {id}
     })
 
-    return NextResponse.json(post)
+    return NextResponse.json({ user: post, message: "User was successfully deleted."} , { status: 201})
+
 }

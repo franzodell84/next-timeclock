@@ -50,7 +50,7 @@ export async function POST(request){
                 }
             })    
 
-            return NextResponse.json({ user: result, message: "User created successfully."} , { status: 201})
+            return NextResponse.json({ user: result, message: "User was successfully created."} , { status: 201})
 
 
         }else{
@@ -86,7 +86,7 @@ export async function POST(request){
 
         }
         
-        return NextResponse.json({ user: result, message: "User updated successfully."} , { status: 201})
+        return NextResponse.json({ user: result, message: "User was successfully updated."} , { status: 201})
 
     } catch (error) {
         //return NextResponse.json({ user: null, message: "Error."} , { status: 500})
