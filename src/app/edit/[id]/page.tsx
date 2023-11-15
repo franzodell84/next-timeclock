@@ -11,12 +11,12 @@ const EditUserPage = async ({ params }: { params: { id: string } }) => {
   return (
     <main>
       <div className="flex w-full">
-        <div className="grid flex-grow card place-items-left w-4/12 p-5"></div>
+        <div className="grid flex-grow card place-items-left w-5/12 p-5"></div>
         <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-4/12 p-5">
           <h3>Update User</h3>
           <UserForm data={user} />
         </div>
-        <div className="grid flex-grow card place-items-left w-4/12 p-5"></div>
+        <div className="grid flex-grow card place-items-left w-5/12 p-5"></div>
       </div>
     </main>
   );

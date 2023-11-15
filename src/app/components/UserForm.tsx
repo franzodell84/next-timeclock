@@ -178,7 +178,9 @@ const UserForm = ({ data }: UsersProps) => {
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="flex flex-row gap-3 justify-center items-center mt-5">
           <SubmitButton text={"Save"} pendingText={"Saving..."} />
-          {data && <BackButton text={"Back"} pendingText={""} />}
+          {data && (
+            <BackButton text={"Back"} pendingText={""} backToMain={false} />
+          )}
         </div>
       </form>
     </main>

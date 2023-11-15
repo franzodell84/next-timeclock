@@ -11,23 +11,23 @@ const initialState = {
 const BackButton = ({
   text,
   pendingText,
+  backToMain,
 }: {
   text: string;
   pendingText: string;
+  backToMain: boolean | null;
 }) => {
   //  const formLoading = isLoading();
   //  const pending = !formLoading;
   const router = useRouter();
   const pending = false;
 
-  console.log(pending);
-
   return (
     <button
       className="btn btn-secondary  w-40"
       aria-disabled={pending}
       disabled={pending}
-      onClick={() => router.back()}
+      onClick={backToMain ? () => router.push("/") : () => router.back()}
     >
       {!pending ? (
         ""

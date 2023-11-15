@@ -50,12 +50,12 @@ export default async function Home() {
     <main>
       <div className="flex w-full">
         <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-3/12 p-5">
-          <h3>Please sign in below</h3>
+          <h2 className="text-2l text-left font-bold">Please sign in below</h2>
           <UserLog users={users} />
         </div>
         <div className="divider divider-horizontal"></div>
         <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-9/12 p-5 align-top">
-          <h3>Logs for this week</h3>
+          <h2 className="text-2l text-left font-bold">Logs for this week</h2>
           <div className="overflow-x-auto">
             <div className="flex justify-between items-center p-2 w-full align-top">
               <div className="flex flex-row w-3/12 justify-center items-center gap-3">

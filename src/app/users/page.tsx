@@ -24,12 +24,12 @@ export default async function Home() {
     <main>
       <div className="flex w-full">
         <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-3/12 p-5">
-          <h3>Create User</h3>
+          <h2 className="text-2l text-left font-bold">Create User</h2>
           <UserForm />
         </div>
         <div className="divider divider-horizontal"></div>
         <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-9/12 p-5 align-top">
-          <h3>Users</h3>
+          <h2 className="text-2l text-left font-bold">Users</h2>
           <div className="overflow-x-auto">
             <div className="flex justify-between items-center p-2 w-full align-top">
               <div className="flex flex-row w-4/12 justify-right items-right">
