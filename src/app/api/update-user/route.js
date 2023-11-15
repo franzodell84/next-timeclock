@@ -8,7 +8,7 @@ export async function POST(request){
 
     try{
  
-        let paramCount = Object.keys(res).length;
+        //let paramCount = Object.keys(res).length;
 
         const {userId, userName , password, email, admin, disabled} = res;
 
@@ -17,24 +17,24 @@ export async function POST(request){
         var date = new Date();     
 
     
-        if(userId == ""){
+        if(userId === ""){
             
             // check if email already exists
             const existingUserByEmail = await prisma.user.findUnique({
                 where: { email: email}
             })
-
+            
             if(existingUserByEmail){
-                return NextResponse.json({ user: null, message: "User with this email already exists."} , { status: 409})
+                return NextResponse.json({ user: existingUserByEmail, message: "User with this email already exists."} , { status: 409})
             }
-   
+             
             // check if username already exists
-            const existingUserByUserName = await prisma.user.findUnique({
+            const existingUserByUserName = await prisma.user.findFirst({
                 where: { name: userName}
             })
-
+            
             if(existingUserByUserName){
-                return NextResponse.json({ user: null, message: "User with this username already exists."} , { status: 409})
+                return NextResponse.json({ user: existingUserByUserName, message: "User with this username already exists."} , { status: 409})
             }
             
             // create record

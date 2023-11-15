@@ -76,15 +76,13 @@ const UserForm = ({ data }: UsersProps) => {
         })
         .catch((err) => console.error("Error: " + err));
 
+      console.log(response);
+
       //formLoading.setLoadFalse();
     } catch (error) {
       console.error(error);
     }
   };
-
-  if (data) {
-    //setUserId(data.id);
-  }
 
   return (
     <main>

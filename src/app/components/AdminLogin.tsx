@@ -42,7 +42,7 @@ const AdminLogin = () => {
     return (
       <p>
         <br></br>
-        You&quot;re currently logged in. Please go back to the&nbsp;
+        You&lsquo;re currently logged in. Please go back to the&nbsp;
         <Link className="text-blue-500 underline" href="/">
           Timeclock
         </Link>

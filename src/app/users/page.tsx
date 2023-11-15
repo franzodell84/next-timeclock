@@ -32,19 +32,19 @@ export default async function Home() {
           <h2 className="text-2l text-left font-bold">Users</h2>
           <div className="overflow-x-auto">
             <div className="flex justify-between items-center p-2 w-full align-top">
-              <div className="flex flex-row w-4/12 justify-right items-right">
+              <div className="flex flex-row w-4/12 justify-right items-right font-bold">
                 Name
               </div>
-              <div className="flex flex-row w-3/12 justify-right items-right">
+              <div className="flex flex-row w-3/12 justify-right items-right font-bold">
                 Email
               </div>
-              <div className="flex flex-row w-1/12 justify-right items-right">
+              <div className="flex flex-row w-1/12 justify-right items-right font-bold">
                 Admin
               </div>
-              <div className="flex flex-row w-1/12 justify-right items-right">
+              <div className="flex flex-row w-1/12 justify-right items-right font-bold">
                 Inactive
               </div>
-              <div className="flex flex-row w-3/12 justify-right items-right">
+              <div className="flex flex-row w-3/12 justify-right items-right font-bold">
                 &nbsp;
               </div>
             </div>
