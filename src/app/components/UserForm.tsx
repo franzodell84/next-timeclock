@@ -16,7 +16,9 @@ type UsersProps = {
 const UserForm = ({ data }: UsersProps) => {
   const [userId, setUserId] = useState(data ? data?.id : "");
   const [userName, setUserName] = useState(data ? data?.name : "");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(
+    data != null ? (data?.userPassword !== null ? "password_on_file" : "") : ""
+  );
   const [email, setEmail] = useState(data ? data?.email : "");
   const [admin, setAdmin] = useState(data ? data?.admin : false);
   const [disabled, setDisabled] = useState(data ? data?.disabled : false);
@@ -97,8 +99,8 @@ const UserForm = ({ data }: UsersProps) => {
             type="text"
             id="userName"
             autoComplete="true"
+            value={userName}
             onChange={(event) => setUserName(event.target.value)}
-            defaultValue={data != null ? data?.name : ""}
             required
           />
         </div>
@@ -109,14 +111,8 @@ const UserForm = ({ data }: UsersProps) => {
             type="password"
             id="password"
             autoComplete="true"
+            value={password}
             onChange={(event) => setPassword(event.target.value)}
-            defaultValue={
-              data != null
-                ? data?.userPassword !== null
-                  ? "password_on_file"
-                  : ""
-                : ""
-            }
             required
           />
         </div>
@@ -128,9 +124,7 @@ const UserForm = ({ data }: UsersProps) => {
             id="email"
             autoComplete="true"
             onChange={(event) => setEmail(event.target.value)}
-            defaultValue={
-              data != null ? (data?.email !== null ? data?.email : "") : ""
-            }
+            value={email ? email : ""}
             required
           />
         </div>
@@ -140,16 +134,9 @@ const UserForm = ({ data }: UsersProps) => {
             <input
               id="default-checkbox"
               type="checkbox"
-              value=""
+              checked={admin}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               onChange={(event) => setAdmin(event.target.checked)}
-              defaultChecked={
-                data != null
-                  ? data?.admin !== null
-                    ? data?.admin
-                    : false
-                  : false
-              }
             />
             <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Admin
@@ -159,16 +146,9 @@ const UserForm = ({ data }: UsersProps) => {
             <input
               id="checked-checkbox"
               type="checkbox"
-              value=""
+              checked={disabled}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               onChange={(event) => setDisabled(event.target.checked)}
-              defaultChecked={
-                data != null
-                  ? data?.disabled !== null
-                    ? data?.disabled
-                    : false
-                  : false
-              }
             />
             <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Inactive

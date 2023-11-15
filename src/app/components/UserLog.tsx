@@ -14,7 +14,6 @@ type UsersProps = {
 
 const UserLog = ({ users }: UsersProps) => {
   const [logUser, setUser] = useState("");
-  const [logUserName, setUserName] = useState("");
   const [logPassword, setPassword] = useState("");
   const [logInOut, setInOut] = useState("");
   const [logNotes, setNotes] = useState("");
@@ -71,7 +70,9 @@ const UserLog = ({ users }: UsersProps) => {
             className="select-sm select-bordered w-full max-w-xs"
             name="user"
             id="user"
-            onChange={(event) => setUser(event.target.value)}
+            value={logUser}
+            onChange={(e) => setUser(e.target.value)}
+            required
           >
             <option value="">...</option>
             {users &&
@@ -89,7 +90,8 @@ const UserLog = ({ users }: UsersProps) => {
             type="password"
             id="password"
             autoComplete="true"
-            onChange={(event) => setPassword(event.target.value)}
+            value={logPassword}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
@@ -99,7 +101,9 @@ const UserLog = ({ users }: UsersProps) => {
             className="select-sm select-bordered w-full max-w-xs"
             name="inout"
             id="inout"
-            onChange={(event) => setInOut(event.target.value)}
+            value={logInOut}
+            onChange={(e) => setInOut(e.target.value)}
+            required
           >
             <option value="">...</option>
             <option value="break">break</option>
@@ -112,9 +116,11 @@ const UserLog = ({ users }: UsersProps) => {
           <label htmlFor="notes">Notes:</label>
           <textarea
             className="textarea-sm"
-            id="notes"
-            onChange={(event) => setNotes(event.target.value)}
-          />
+            name="notes"
+            value={logNotes}
+            placeholder=""
+            onChange={(e) => setNotes(e.target.value)}
+          ></textarea>
         </div>
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="flex flex-row gap-3 justify-center items-center mt-5">

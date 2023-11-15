@@ -49,8 +49,10 @@ export default async function Home() {
   return (
     <main>
       <div className="flex w-full">
-        <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-3/12 p-5">
-          <h2 className="text-2l text-left font-bold">Please sign in below</h2>
+        <div className="grid flex-grow card bg-base-200 rounded-box place-items-left w-3/12 p-5 align-top ">
+          <span className="text-2l text-left font-bold h-5">
+            Please sign in below
+          </span>
           <UserLog users={users} />
         </div>
         <div className="divider divider-horizontal"></div>

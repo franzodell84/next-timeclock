@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { LoginStatus } from "./LoginStatus";
 
