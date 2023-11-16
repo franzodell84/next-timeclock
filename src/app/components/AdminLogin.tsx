@@ -79,7 +79,7 @@ const AdminLogin = () => {
       const signInData = await signIn("credentials", {
         email: formData.get("email"),
         password: formData.get("password"),
-        // callbackUrl: "/",
+        callbackUrl: "/users",
       });
 
       if (signInData?.error) {
