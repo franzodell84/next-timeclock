@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import AuthProvider from "./components/AuthProvider";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
             {children}
           </AuthProvider>
         </div>
+      
       </body>
     </html>
   );

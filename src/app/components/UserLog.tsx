@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import SubmitButton from "./SubmitButton";
+import Dialog from "./Dialog";
+
 //import { isLoading } from "@/store/flags";
 
 type UsersProps = {
@@ -25,14 +27,14 @@ const UserLog = ({ users }: UsersProps) => {
     event.preventDefault();
 
     try {
-      console.log(logUser);
-      console.log(logPassword);
-      console.log(logInOut);
-      console.log(logNotes);
-
-      //formLoading.setLoadTrue();
-
-      //console.log(formLoading);
+      console.log(
+        JSON.stringify({
+          logUser,
+          logPassword,
+          logInOut,
+          logNotes,
+        })
+      );
 
       await fetch("/api/add-log", {
         method: "POST",
@@ -45,14 +47,24 @@ const UserLog = ({ users }: UsersProps) => {
           logInOut,
           logNotes,
         }),
-      });
+      })
+        .then((response) => {
+          console.log(response.status);
 
-      router.refresh();
+          if (response.status == 401) {
+            router.refresh();
+            router.push("/?showDialog=y");
+          } else {
+            setUser("");
+            setPassword("");
+            setInOut("");
+            setNotes("");
 
-      setUser("");
-      setPassword("");
-      setInOut("");
-      setNotes("");
+            router.refresh();
+            router.push("/");
+          }
+        })
+        .catch((err) => console.error("Error: " + err));
 
       //formLoading.setLoadFalse();
     } catch (error) {
@@ -60,8 +72,19 @@ const UserLog = ({ users }: UsersProps) => {
     }
   };
 
+  async function onClose() {
+    console.log("Modal has closed");
+  }
+
+  async function onOk() {
+    console.log("Ok was clicked");
+  }
+
   return (
     <main>
+      <Dialog title="Log Error" onClose={onClose} onOk={onOk}>
+        <p>User Email / Password is incorrect.</p>
+      </Dialog>
       <form onSubmit={handleSubmit}>
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="form-control w-full max-w-xs">
