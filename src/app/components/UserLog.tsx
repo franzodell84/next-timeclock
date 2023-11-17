@@ -52,8 +52,8 @@ const UserLog = ({ users }: UsersProps) => {
           console.log(response.status);
 
           if (response.status == 401) {
-            router.refresh();
             router.push("/?showDialog=y");
+            router.refresh();
           } else {
             setUser("");
             setPassword("");
@@ -74,10 +74,18 @@ const UserLog = ({ users }: UsersProps) => {
 
   async function onClose() {
     console.log("Modal has closed");
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/");
+    }
   }
 
   async function onOk() {
     console.log("Ok was clicked");
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/");
+    }
   }
 
   return (

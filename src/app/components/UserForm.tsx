@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import SubmitButton from "./SubmitButton";
 import BackButton from "./BackButton";
+import Dialog from "./Dialog";
 //import { isLoading } from "@/store/flags";
 
 type UsersProps = {
@@ -22,6 +23,10 @@ const UserForm = ({ data }: UsersProps) => {
   const [email, setEmail] = useState(data ? data?.email : "");
   const [admin, setAdmin] = useState(data ? data?.admin : false);
   const [disabled, setDisabled] = useState(data ? data?.disabled : false);
+  const [errMessage, setErrMessage] = useState("");
+
+  const inputUserRef = useRef(null);
+  const inputEmailRef = useRef(null);
 
   const router = useRouter();
 
@@ -62,17 +67,27 @@ const UserForm = ({ data }: UsersProps) => {
         }),
       })
         .then((response) => {
-          //console.log(response);
+          console.log(response);
 
-          setUserId("");
-          setUserName("");
-          setPassword("");
-          setEmail("");
-          setAdmin(false);
-          setDisabled(false);
+          if (response.status == 401) {
+            setErrMessage("User with this email already exists.");
+            router.push("users?showDialog=y");
+            router.refresh();
+          } else if (response.status == 409) {
+            setErrMessage("User with this name already exists.");
+            router.push("users?showDialog=y");
+            router.refresh();
+          } else {
+            setUserId("");
+            setUserName("");
+            setPassword("");
+            setEmail("");
+            setAdmin(false);
+            setDisabled(false);
 
-          router.refresh();
-          router.push("/users");
+            router.refresh();
+            router.push("/users");
+          }
         })
         .catch((err) => console.error("Error: " + err));
 
@@ -84,8 +99,27 @@ const UserForm = ({ data }: UsersProps) => {
     }
   };
 
+  async function onClose() {
+    console.log("Modal has closed");
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/users");
+    }
+  }
+
+  async function onOk() {
+    console.log("Ok was clicked");
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/users");
+    }
+  }
+
   return (
     <main>
+      <Dialog title="Login Error" onClose={onClose} onOk={onOk}>
+        <p>{errMessage}</p>
+      </Dialog>
       <form onSubmit={handleSubmit}>
         {data && <input type="hidden" name="id" defaultValue={data?.id} />}
 
@@ -93,6 +127,7 @@ const UserForm = ({ data }: UsersProps) => {
         <div className="form-control w-full max-w-xs">
           <label htmlFor="user">Name:</label>
           <input
+            ref={inputUserRef}
             className="input-sm input-bordered w-full max-w-xs"
             type="text"
             id="userName"
@@ -117,6 +152,7 @@ const UserForm = ({ data }: UsersProps) => {
         <div className="form-control w-full max-w-xs">
           <label htmlFor="email">Email:</label>
           <input
+            ref={inputEmailRef}
             className="input-sm input-bordered w-full max-w-xs"
             type="text"
             id="email"

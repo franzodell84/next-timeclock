@@ -59,10 +59,10 @@ export const authOptions : NextAuthOptions = {
                         return authUser;
                     }
 
-                    return null
+                    return null;
 
                 } catch (error) {
-                    return null
+                    return null;
                 }
             }
         })
@@ -71,19 +71,36 @@ export const authOptions : NextAuthOptions = {
     callbacks: {
         async jwt({token, user}){
             /**/
-            if(user){
+
+            if(user !== null){
                 return {
                     ...token,
                     id: user.id,
                     username: user.name,
                     email: user.email
                 }
+            }else{
+                throw new Error("Email / Password is incorrect.")
+                //return { error: 'Invalid Email / Password.' };
             }
             
-            return token
+            //return token
         },
         async session({ session, user, token }) {
             try {
+                if (!session.user?.email) {
+                    throw new Error("Email / Password is incorrect.")
+                }
+
+                const currentUser = await prisma.user.findFirst({
+                    where: {
+                        email: session.user?.email
+                    }
+                })
+                
+                if (!currentUser) {
+                    throw new Error("Email / Password is incorrect.")
+                }
 
                 return{
                     ...session,

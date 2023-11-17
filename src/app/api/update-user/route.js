@@ -25,7 +25,7 @@ export async function POST(request){
             })
             
             if(existingUserByEmail){
-                return NextResponse.json({ user: existingUserByEmail, message: "User with this email already exists."} , { status: 409})
+                return NextResponse.json({ user: existingUserByEmail, message: "User with this email already exists."} , { status: 401})
             }
              
             // check if username already exists

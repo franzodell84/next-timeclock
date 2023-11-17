@@ -1,14 +1,14 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { z } from "zod";
 import LoadingDialog from "./LoadingDialog";
 import SubmitButton from "./SubmitButton";
 import BackButton from "./BackButton";
-
+import Dialog from "./Dialog";
 //import { isLoading } from "@/store/flags";
 
 //const formLoading = isLoading();
@@ -27,6 +27,8 @@ const AdminLogin = () => {
   const router = useRouter();
   const session = useSession();
 
+  const [errMessage, setErrMessage] = useState("");
+
   const [formError, setFormError] = useState<z.ZodFormattedError<
     FormSchema,
     string
@@ -37,6 +39,8 @@ const AdminLogin = () => {
   }
 
   console.log(session);
+  //const searchParams = useSearchParams();
+  //const showDialog = searchParams.get("showDialog");
 
   if (session.status !== "unauthenticated") {
     return (
@@ -79,11 +83,13 @@ const AdminLogin = () => {
       const signInData = await signIn("credentials", {
         email: formData.get("email"),
         password: formData.get("password"),
-        callbackUrl: "/users",
+        //callbackUrl: "/login",
       });
 
       if (signInData?.error) {
-        //console.log(signInData?.error);
+        setErrMessage("Email or Password is incorrect.");
+        router.push("login?showDialog=y");
+        router.refresh();
       } else {
         router.refresh();
         router.push("/");
@@ -101,8 +107,27 @@ const AdminLogin = () => {
     }
   };
 
+  async function onClose() {
+    console.log("Modal has closed");
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/users");
+    }
+  }
+
+  async function onOk() {
+    console.log("Ok was clicked");
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", "/users");
+    }
+  }
+
   return (
     <main>
+      <Dialog title="Login Error" onClose={onClose} onOk={onOk}>
+        <p>{errMessage}</p>
+      </Dialog>
       <form onSubmit={handleSubmit}>
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="form-control w-full max-w-xs">

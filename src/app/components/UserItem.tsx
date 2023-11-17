@@ -5,6 +5,7 @@ import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { User } from "@prisma/client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
 const UserItem = ({ userRow }: { userRow: User }) => {
   const [deleteId, deleteRow] = useState("");
 
@@ -15,6 +16,7 @@ const UserItem = ({ userRow }: { userRow: User }) => {
       const response = await fetch(`/api/delete-user/${deleteId}`, {
         method: "DELETE",
       });
+
       router.refresh();
     } catch (error) {
       console.error("Error deleting data :", error);
