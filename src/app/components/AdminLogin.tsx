@@ -27,6 +27,8 @@ const AdminLogin = () => {
   const router = useRouter();
   const session = useSession();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [errMessage, setErrMessage] = useState("");
 
   const [formError, setFormError] = useState<z.ZodFormattedError<
@@ -60,7 +62,7 @@ const AdminLogin = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-
+    setIsLoading(true);
     const formData = new FormData(event.target as HTMLFormElement);
 
     const formDataValues = {
@@ -83,6 +85,7 @@ const AdminLogin = () => {
       const signInData = await signIn("credentials", {
         email: formData.get("email"),
         password: formData.get("password"),
+        redirect: false,
         //callbackUrl: "/login",
       });
 
@@ -104,6 +107,9 @@ const AdminLogin = () => {
         */
     } catch (error) {
       console.error(error);
+    } finally {
+      console.log("Done");
+      setIsLoading(false);
     }
   };
 
@@ -175,7 +181,10 @@ const AdminLogin = () => {
 
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="flex flex-row gap-3 justify-center items-center mt-5">
-          <SubmitButton text={"Submit"} pendingText={"Saving..."} />
+          <SubmitButton
+            text={isLoading ? "Logging-in..." : "Submit"}
+            disabled={isLoading}
+          />
           <BackButton
             text={"Back to Main"}
             pendingText={""}

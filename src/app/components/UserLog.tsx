@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import SubmitButton from "./SubmitButton";
@@ -19,13 +19,13 @@ const UserLog = ({ users }: UsersProps) => {
   const [logPassword, setPassword] = useState("");
   const [logInOut, setInOut] = useState("");
   const [logNotes, setNotes] = useState("");
-  const [isLoading, setLoading] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setIsLoading(true);
     try {
       console.log(
         JSON.stringify({
@@ -69,6 +69,8 @@ const UserLog = ({ users }: UsersProps) => {
       //formLoading.setLoadFalse();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -155,7 +157,10 @@ const UserLog = ({ users }: UsersProps) => {
         </div>
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="flex flex-row gap-3 justify-center items-center mt-5">
-          <SubmitButton text={"Submit"} pendingText={"Saving..."} />
+          <SubmitButton
+            text={isLoading ? "Saving..." : "Submit"}
+            disabled={isLoading}
+          />
         </div>
       </form>
     </main>

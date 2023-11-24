@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 import SubmitButton from "./SubmitButton";
@@ -25,6 +25,8 @@ const UserForm = ({ data }: UsersProps) => {
   const [disabled, setDisabled] = useState(data ? data?.disabled : false);
   const [errMessage, setErrMessage] = useState("");
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const inputUserRef = useRef(null);
   const inputEmailRef = useRef(null);
 
@@ -32,7 +34,7 @@ const UserForm = ({ data }: UsersProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setIsLoading(true);
     try {
       console.log("Saving");
       console.log(userId);
@@ -96,6 +98,8 @@ const UserForm = ({ data }: UsersProps) => {
       //formLoading.setLoadFalse();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -191,7 +195,10 @@ const UserForm = ({ data }: UsersProps) => {
         </div>
         <div className="form-control w-full max-w-xs">&nbsp;</div>
         <div className="flex flex-row gap-3 justify-center items-center mt-5">
-          <SubmitButton text={"Save"} pendingText={"Saving..."} />
+          <SubmitButton
+            text={isLoading ? "Saving..." : "Save"}
+            disabled={isLoading}
+          />
           {data && (
             <BackButton text={"Back"} pendingText={""} backToMain={false} />
           )}

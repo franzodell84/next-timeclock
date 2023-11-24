@@ -7,7 +7,13 @@ import { LoginStatus } from "./LoginStatus";
 
 export const PageMenu = async () => {
   const session = await getServerSession(authOptions);
-
+  /*
+  * Remove this from the user tab
+         {session?.user && (
+       
+       
+       )}
+   */
   return (
     <div className="flex flex-row flex-nowrap p-2">
       <div>
@@ -17,13 +23,12 @@ export const PageMenu = async () => {
               Timeclock
             </Link>
           </li>
-          {session?.user && (
-            <li className="px-4 py-2 bg-gray-600 rounded-md text-white">
-              <Link className="link no-underline" href="/users">
-                Manage Users
-              </Link>
-            </li>
-          )}
+
+          <li className="px-4 py-2 bg-gray-600 rounded-md text-white">
+            <Link className="link no-underline" href="/users">
+              Manage Users
+            </Link>
+          </li>
         </ul>
       </div>
 

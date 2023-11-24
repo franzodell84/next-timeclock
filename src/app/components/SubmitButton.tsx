@@ -8,10 +8,10 @@ const initialState = {
 
 const SubmitButton = ({
   text,
-  pendingText,
+  disabled,
 }: {
   text: string;
-  pendingText: string;
+  disabled: boolean;
 }) => {
   //  const formLoading = isLoading();
   //  const pending = !formLoading;
@@ -20,19 +20,15 @@ const SubmitButton = ({
   //console.log(pending);
 
   return (
-    <button
-      className="btn btn-primary w-40"
-      aria-disabled={pending}
-      disabled={pending}
-    >
-      {!pending ? (
+    <button className="btn btn-primary w-40" aria-disabled={disabled}>
+      {!disabled ? (
         ""
       ) : (
         <div className="animate-spin">
           <FaSpinner />
         </div>
       )}{" "}
-      {!pending ? text : pendingText}
+      {!disabled ? text : text}
     </button>
   );
 };
